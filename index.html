@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My TODO List</title>
+  <link rel="stylesheet" type="text/css" href="css/normalize.css">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+</head>
+<body>
+  <div class="wrapper">
+    <h1 class="page-header">TODO List</h1>
+
+    <form class="task-form">
+      <input class="task-input" type="text" id="userinput" placeholder="Enter Task">
+      <button class="input-btn btn" type="submit">Add Task</button>
+    </form>
+
+    <input class="filter-tasks" type="text" name="filter" id="filter" placeholder="Filter Tasks">
+    <ul class="task-list">
+      <li class="task-list-item">
+        <span class="task-content">Notebook</span>
+        <button class="delete-btn btn" aria-label="Delete Task"></button>
+      </li>
+    </ul>
+    <button class="clear-btn btn" type="button">Clear Tasks</button>
+  </div>
+
+  <script type="text/javascript" src="js/script.js"></script>
+</body>
+</html>
