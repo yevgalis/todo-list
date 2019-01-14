@@ -35,8 +35,10 @@ const renderTask = taskValue => {
   const btn = document.createElement('button');
 
   li.classList.add('task-list-item');
+  li.setAttribute('tabindex', '0');
   span.textContent = taskValue;
-  btn.classList.add('delete-btn', 'btn');
+  span.classList.add('task-content');
+  btn.classList.add('delete-btn');  // Добавить listener для пробела и enter для toggle done-task
   btn.setAttribute('aria-label','Delete Task');
   li.appendChild(span);
   li.appendChild(btn);
@@ -47,7 +49,10 @@ const renderTask = taskValue => {
 const taskListHandler = evt => {
   evt.preventDefault();
 
+  // Добавить возврат класса done-task из localStorage
   if (evt.target.classList.contains('task-list-item')) {
+    evt.target.firstElementChild.classList.toggle('done-task');
+  } else if (evt.target.classList.contains('task-content')) {
     evt.target.classList.toggle('done-task');
   }
 
