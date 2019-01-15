@@ -1,7 +1,9 @@
 'use strict';
 
+const ENTER_KEY_CODE = 13;
 const form = document.querySelector('.task-form');
 const taskInput = document.querySelector('.task-input');
+const validationTextBlock = document.querySelector('.task-input-tips');
 const filterInput = document.querySelector('.filter-tasks');
 const clearFilterBtn = document.querySelector('.clear-filter-btn');
 const taskList = document.querySelector('.task-list');
@@ -20,12 +22,26 @@ const clearFilterInput = () => {
 const addTask = evt => {
   evt.preventDefault();
   
-  if (taskInput.value) {
+  if (taskInput.value && taskInput.value.trim().length) {
+    hideValidationText();
     renderTask(taskInput.value);
     addTaskToLocalStorage(taskInput.value);
     clearTaskInput();
     filterTasks();
+  } else {
+    showValidationText();
   }
+};
+
+// TEXT INPUT VALIDATION TIPS
+const showValidationText = () => {
+  validationTextBlock.style.display = 'block';
+  validationTextBlock.textContent = '* text can\'t be empty or consist of spaces';
+};
+
+const hideValidationText = () => {
+  validationTextBlock.style.display = 'none';
+  validationTextBlock.textContent = '';
 };
 
 // RENDER TASK ITEM
@@ -38,7 +54,7 @@ const renderTask = taskValue => {
   li.setAttribute('tabindex', '0');
   span.textContent = taskValue;
   span.classList.add('task-content');
-  btn.classList.add('delete-btn');  // Добавить listener для пробела и enter для toggle done-task
+  btn.classList.add('delete-btn');
   btn.setAttribute('aria-label','Delete Task');
   li.appendChild(span);
   li.appendChild(btn);
@@ -59,6 +75,12 @@ const taskListHandler = evt => {
   if (evt.target.classList.contains('delete-btn')) {
     evt.target.parentElement.remove();
     removeTaskFromLocalStorage(evt.target.parentElement.firstElementChild);
+  }
+};
+
+const taskListKeyboardHandler = evt => {
+  if (evt.target.classList.contains('task-list-item') && evt.keyCode === ENTER_KEY_CODE) {
+    evt.target.firstElementChild.classList.toggle('done-task');
   }
 };
 
@@ -149,4 +171,5 @@ form.addEventListener('submit', addTask);
 filterInput.addEventListener('input', filterTasks);
 clearFilterBtn.addEventListener('click', onClearFilterBtnClick);
 taskList.addEventListener('click', taskListHandler);
+taskList.addEventListener('keypress', taskListKeyboardHandler);
 clearTasksBtn.addEventListener('click', clearTasks);
