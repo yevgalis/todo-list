@@ -64,6 +64,7 @@ body {
   flex-grow: 1;
   height: 45px;
   padding: 10px 20px;
+  padding-left: 0;
   font-family: inherit;
   color: rgb(94, 84, 84);
   line-height: 25px;
@@ -72,12 +73,27 @@ body {
   border-bottom: 1px solid #000000;
 }
 
-.task-input::placeholder {
-  font-size: 16px;
-}
-
 .task-input:focus {
   border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+.task-input-label {
+  position: absolute;
+  top: 35px;
+  left: 0;
+  font-size: 16px;
+  transition: all 0.2s linear;
+  opacity: 0.4;
+}
+
+.task-input-label:hover {
+  cursor: text;
+}
+
+.task-input-focus {
+  top: 7px;
+  font-size: 12px;
+  opacity: 0.5;
 }
 
 .input-btn {

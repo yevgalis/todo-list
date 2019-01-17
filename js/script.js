@@ -1,8 +1,14 @@
 'use strict';
 
+// TODO:
+// +++ 1. Сделать плейсхолдер через лейбл с перемещеннием, когда инпут в фокусе
+// 2. Передавать в localStorage сделанные задания (возможно, через отдельный блок АРХИВ)
+// 3. Сделать drag'n'drop для списка задач
+
 const ENTER_KEY_CODE = 13;
 const form = document.querySelector('.task-form');
 const taskInput = document.querySelector('.task-input');
+const taskInputLabel = document.querySelector('.task-input-label');
 const validationTextBlock = document.querySelector('.task-input-tips');
 const filterInput = document.querySelector('.filter-tasks');
 const clearFilterBtn = document.querySelector('.clear-filter-btn');
@@ -16,6 +22,20 @@ const clearTaskInput = () => {
 
 const clearFilterInput = () => {
   filterInput.value = '';
+};
+
+// INPUT LABEL HANDLING
+const onTaskInputFocus = () => {
+  taskInputLabel.classList.add('task-input-focus');
+  taskInput.addEventListener('blur', onTaskInputBlur);
+};
+
+const onTaskInputBlur = () => {
+  if (!taskInput.value.length) {
+    taskInputLabel.classList.remove('task-input-focus');
+  }
+
+  taskInput.removeEventListener('blur', onTaskInputBlur);
 };
 
 // ADD NEW TASK
@@ -65,7 +85,6 @@ const renderTask = taskValue => {
 const taskListHandler = evt => {
   evt.preventDefault();
 
-  // Добавить возврат класса done-task из localStorage
   if (evt.target.classList.contains('task-list-item')) {
     evt.target.firstElementChild.classList.toggle('done-task');
   } else if (evt.target.classList.contains('task-content')) {
@@ -168,6 +187,7 @@ clearFilterInput();
 // ADD LISTENERS
 document.addEventListener('DOMContentLoaded', getTasksFromLocalStorage);
 form.addEventListener('submit', addTask);
+taskInput.addEventListener('focus', onTaskInputFocus);
 filterInput.addEventListener('input', filterTasks);
 clearFilterBtn.addEventListener('click', onClearFilterBtnClick);
 taskList.addEventListener('click', taskListHandler);
