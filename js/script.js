@@ -56,7 +56,7 @@ const addTask = evt => {
 // TEXT INPUT VALIDATION TIPS
 const showValidationText = () => {
   validationTextBlock.style.display = 'block';
-  validationTextBlock.textContent = '* text can\'t be empty or consist of spaces';
+  validationTextBlock.textContent = `* text can't be empty or consist of spaces`;
 };
 
 const hideValidationText = () => {
