@@ -1,9 +1,9 @@
 'use strict';
 
-// TODO:
-// +++ 1. Сделать плейсхолдер через лейбл с перемещеннием, когда инпут в фокусе
 // 2. Передавать в localStorage сделанные задания (возможно, через отдельный блок АРХИВ)
 // 3. Сделать drag'n'drop для списка задач
+
+(function () {
 
 const ENTER_KEY_CODE = 13;
 const form = document.querySelector('.task-form');
@@ -61,7 +61,6 @@ const showValidationText = () => {
 
 const hideValidationText = () => {
   validationTextBlock.style.display = 'none';
-  validationTextBlock.textContent = '';
 };
 
 // RENDER TASK ITEM
@@ -157,13 +156,13 @@ const addTaskToLocalStorage = task => {
 const removeTaskFromLocalStorage = task => {
   let tasks = checkLocalStorage();
 
-  tasks.forEach((taskItem, index) => {
-    if (task.textContent === taskItem) {
-      tasks.splice(index, 1);
+  for (let i = 0; i < tasks.length; i++) {
+    if (task.textContent === tasks[i]) {
+      tasks.splice(i, 1);
+      localStorage.setItem('tasks', JSON.stringify(tasks));
+      return true;
     }
-  });
-
-  localStorage.setItem('tasks', JSON.stringify(tasks));
+  }
 };
 
 // CLEAR LOCAL STORAGE
@@ -193,3 +192,5 @@ clearFilterBtn.addEventListener('click', onClearFilterBtnClick);
 taskList.addEventListener('click', taskListHandler);
 taskList.addEventListener('keypress', taskListKeyboardHandler);
 clearTasksBtn.addEventListener('click', clearTasks);
+
+})();

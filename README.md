@@ -1,2 +1,2 @@
 # ToDoList
-Basic *to-do list* built using `HTML`, `CSS` and `JavaScript(ES6)`. Also used `localStorage` for saving all previously input tasks.
+Basic __to-do list__ built using `HTML`, `CSS` and `JavaScript`. Also used `localStorage` for saving all previously input tasks.
