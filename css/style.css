@@ -1,17 +1,24 @@
 html {
   height: 100%;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 *,
 *::before,
 *::after {
-  box-sizing: inherit;
+  -webkit-box-sizing: inherit;
+          box-sizing: inherit;
 }
 
 body {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   word-wrap: break-word;
   padding: 5px 0;
   margin: 0;
@@ -52,16 +59,23 @@ body {
 
 .task-form {
   position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   margin-top: 70px;
   padding-top: 25px;
   padding-bottom: 25px;
 }
 
 .task-input {
-  flex-grow: 1;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
   height: 45px;
   padding: 10px 20px;
   padding-left: 0;
@@ -82,6 +96,7 @@ body {
   top: 35px;
   left: 0;
   font-size: 16px;
+  -webkit-transition: all 0.2s linear;
   transition: all 0.2s linear;
   opacity: 0.4;
 }
@@ -100,13 +115,15 @@ body {
   margin-left: 45px;
   color: #ffffff;
   background-color: rgb(19, 131, 9);
+  -webkit-transition: all 0.15s linear;
   transition: all 0.15s linear;
 }
 
 .input-btn:hover,
 .input-btn:focus {
   background-color: rgb(106, 30, 177);
-  box-shadow: 5px 5px rgb(189, 131, 243);
+  -webkit-box-shadow: 5px 5px rgb(189, 131, 243);
+          box-shadow: 5px 5px rgb(189, 131, 243);
 }
 
 .input-btn:active {
@@ -115,9 +132,14 @@ body {
 
 .filter-wrapper {
   position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   margin-top: 40px;
 }
 
@@ -128,6 +150,18 @@ body {
   padding: 10px 20px;
   font-family: inherit;
   border: 1px solid gray;
+}
+
+.filter-tasks::-webkit-input-placeholder {
+  font-size: 16px;
+}
+
+.filter-tasks:-ms-input-placeholder {
+  font-size: 16px;
+}
+
+.filter-tasks::-ms-input-placeholder {
+  font-size: 16px;
 }
 
 .filter-tasks::placeholder {
@@ -150,6 +184,7 @@ body {
   background-color: rgb(245, 228, 228);
   /* border: none; */
   border: 1px solid gray;
+  -webkit-transition: all 0.1s linear;
   transition: all 0.1s linear;
   cursor: pointer;
 }
@@ -165,22 +200,31 @@ body {
 }
 
 .task-list {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
   margin: 0;
   padding: 0;
   list-style-type: none;
 }
 
 .task-list-item {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   width: 100%;
   padding: 10px;
   background-color: rgb(198, 253, 215);
   border: 1px solid gray;
   border-top: none;
+  -webkit-transition: all 0.1s linear;
   transition: all 0.1s linear;
   cursor: pointer;
 }
@@ -203,6 +247,7 @@ body {
   font-family: inherit;
   border: none;
   background-color: transparent;
+  -webkit-transition: all 0.1s linear;
   transition: all 0.1s linear;
   cursor: pointer;
 }
@@ -218,7 +263,8 @@ body {
   margin: 0 auto;
   background-color: #3B6347;
   border-radius: 40%;
-  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
 }
 
 .delete-btn::after {
@@ -232,12 +278,14 @@ body {
   margin: 0 auto;
   background-color: #3B6347;
   border-radius: 40%;
-  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+          transform: rotate(-45deg);
 }
 
 .delete-btn:hover,
 .delete-btn:focus {
-  transform: scale(1.4);
+  -webkit-transform: scale(1.4);
+          transform: scale(1.4);
 }
 
 .clear-tasks-btn {
@@ -246,14 +294,17 @@ body {
   margin-top: 45px;
   color: #ffffff;
   background-color: #000000;
-  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  -webkit-transition: all 0.1s linear;
   transition: all 0.1s linear;
 }
 
 .clear-tasks-btn:hover,
 .clear-tasks-btn:focus {
   background-color: #e61717;
-  box-shadow: 5px 5px #e48b8b;
+  -webkit-box-shadow: 5px 5px #e48b8b;
+          box-shadow: 5px 5px #e48b8b;
 }
 
 .clear-tasks-btn:active {
