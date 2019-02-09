@@ -1,8 +1,5 @@
 'use strict';
 
-// 2. Передавать в localStorage сделанные задания (возможно, через отдельный блок АРХИВ)
-// 3. Сделать drag'n'drop для списка задач
-
 (function () {
 
 const ENTER_KEY_CODE = 13;
