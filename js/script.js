@@ -1,7 +1,5 @@
 'use strict';
 
-(function () {
-
 const ENTER_KEY_CODE = 13;
 const form = document.querySelector('.task-form');
 const taskInput = document.querySelector('.task-input');
@@ -189,5 +187,3 @@ clearFilterBtn.addEventListener('click', onClearFilterBtnClick);
 taskList.addEventListener('click', taskListHandler);
 taskList.addEventListener('keypress', taskListKeyboardHandler);
 clearTasksBtn.addEventListener('click', clearTasks);
-
-})();
