@@ -91,7 +91,7 @@ body {
   border-bottom: 1px solid rgba(0, 0, 0, 0.3);
 }
 
-.task-input-label {
+.task-label {
   position: absolute;
   top: 35px;
   left: 0;
@@ -101,7 +101,7 @@ body {
   opacity: 0.4;
 }
 
-.task-input-label:hover {
+.task-label:hover {
   cursor: text;
 }
 
@@ -210,7 +210,7 @@ body {
   list-style-type: none;
 }
 
-.task-list-item {
+.task-item {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -229,8 +229,8 @@ body {
   cursor: pointer;
 }
 
-.task-list-item:hover,
-.task-list-item:focus {
+.task-item:hover,
+.task-item:focus {
   opacity: 0.65;
 }
 
@@ -311,7 +311,7 @@ body {
   opacity: 0.7;
 }
 
-.task-input-tips {
+.task-validation {
   position: absolute;
   top: 70px;
   left: 5px;

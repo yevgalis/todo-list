@@ -3,8 +3,8 @@
 const ENTER_KEY_CODE = 13;
 const form = document.querySelector('.task-form');
 const taskInput = document.querySelector('.task-input');
-const taskInputLabel = document.querySelector('.task-input-label');
-const validationTextBlock = document.querySelector('.task-input-tips');
+const taskInputLabel = document.querySelector('.task-label');
+const taskValidationMessage = document.querySelector('.task-validation');
 const filterInput = document.querySelector('.filter-tasks');
 const clearFilterBtn = document.querySelector('.clear-filter-btn');
 const taskList = document.querySelector('.task-list');
@@ -50,36 +50,28 @@ const addTask = evt => {
 
 // TEXT INPUT VALIDATION TIPS
 const showValidationText = () => {
-  validationTextBlock.style.display = 'block';
-  validationTextBlock.textContent = `* text can't be empty or consist of spaces`;
+  taskValidationMessage.style.display = 'block';
+  taskValidationMessage.textContent = `* text can't be empty or consist of spaces`;
 };
 
 const hideValidationText = () => {
-  validationTextBlock.style.display = 'none';
+  taskValidationMessage.style.display = 'none';
 };
 
 // RENDER TASK ITEM
 const renderTask = taskValue => {
-  const li = document.createElement('li');
-  const span = document.createElement('span');
-  const btn = document.createElement('button');
-
-  li.classList.add('task-list-item');
-  li.setAttribute('tabindex', '0');
-  span.textContent = taskValue;
-  span.classList.add('task-content');
-  btn.classList.add('delete-btn');
-  btn.setAttribute('aria-label','Delete Task');
-  li.appendChild(span);
-  li.appendChild(btn);
-  taskList.append(li);
+  const taskTemplate = document.querySelector('#task-item').content.querySelector('.task-item').cloneNode(true);
+  const taskContent = taskTemplate.querySelector('.task-content');
+  
+  taskContent.textContent = taskValue;
+  taskList.appendChild(taskTemplate);
 };
 
 // DELETE TASK OR MARK AS DONE
 const taskListHandler = evt => {
   evt.preventDefault();
 
-  if (evt.target.classList.contains('task-list-item')) {
+  if (evt.target.classList.contains('task-item')) {
     evt.target.firstElementChild.classList.toggle('done-task');
   } else if (evt.target.classList.contains('task-content')) {
     evt.target.classList.toggle('done-task');
@@ -92,14 +84,14 @@ const taskListHandler = evt => {
 };
 
 const taskListKeyboardHandler = evt => {
-  if (evt.target.classList.contains('task-list-item') && evt.keyCode === ENTER_KEY_CODE) {
+  if (evt.target.classList.contains('task-item') && evt.keyCode === ENTER_KEY_CODE) {
     evt.target.firstElementChild.classList.toggle('done-task');
   }
 };
 
 // FILTER TASKS
 const filterTasks = () => {
-  document.querySelectorAll('.task-list-item').forEach(task => {
+  document.querySelectorAll('.task-item').forEach(task => {
     const item = task.firstElementChild.textContent;
     
     if (item.toLowerCase().indexOf(filterInput.value.toLowerCase()) !== -1) {
