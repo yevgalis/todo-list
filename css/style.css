@@ -37,6 +37,7 @@ body {
   line-height: 22px;
   text-transform: uppercase;
   border: none;
+  outline: none;
   cursor: pointer;
 }
 
@@ -85,6 +86,7 @@ body {
   background-color: transparent;
   border: none;
   border-bottom: 1px solid #000000;
+  outline: none;
 }
 
 .task-input:focus {
@@ -182,7 +184,6 @@ body {
   font-size: 13px;
   color: rgba(0, 0, 0, 0.65);
   background-color: rgb(245, 228, 228);
-  /* border: none; */
   border: 1px solid gray;
   -webkit-transition: all 0.1s linear;
   transition: all 0.1s linear;
@@ -226,7 +227,6 @@ body {
   border-top: none;
   -webkit-transition: all 0.1s linear;
   transition: all 0.1s linear;
-  cursor: pointer;
 }
 
 .task-item:hover,
@@ -234,8 +234,17 @@ body {
   opacity: 0.65;
 }
 
+.task-checkbox {
+  margin-left: 10px;
+  cursor: pointer;
+}
+
 .task-content {
-  color: rgb(94, 84, 84);
+  margin: 0;
+  padding: 0;
+  padding-left: 15px;
+  color: #5e5454;
+  cursor: default;
 }
 
 .delete-btn {
@@ -302,7 +311,7 @@ body {
 
 .clear-tasks-btn:hover,
 .clear-tasks-btn:focus {
-  background-color: #e61717;
+  background-color: #dd1414;
   -webkit-box-shadow: 5px 5px #e48b8b;
           box-shadow: 5px 5px #e48b8b;
 }
@@ -326,3 +335,18 @@ body {
   text-decoration: line-through;
   color: grey;
 }
+
+
+
+/* .visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  white-space: nowrap;
+  clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+} */

@@ -10,16 +10,19 @@
   <body>
     <div class="wrapper">
       <h1 class="page-header">Easily Manage Your Tasks!</h1>
+      <!-- ADD NEW TASK FORM -->
       <form class="task-form">
         <input class="task-input" type="text" id="userinput">
         <label class="task-label" for="userinput">Enter task</label>
         <button class="input-btn btn" type="submit">Add Task</button>
         <span class="task-validation"></span>
       </form>
+      <!-- FILTER CURRENT TASKS -->
       <div class="filter-wrapper">
         <input class="filter-tasks" type="text" name="filter" id="filter" placeholder="Filter tasks">
         <button class="clear-filter-btn" type="button">Clear</button>
       </div>
+      <!-- CURRENT TASKS LIST -->
       <ul class="task-list"></ul>
       <button class="clear-tasks-btn btn" type="button">Clear Tasks</button>
     </div>
@@ -27,7 +30,8 @@
     <!-- TASK LIST ITEM TEMPLATE -->
     <template id="task-item">
       <li class="task-item">
-        <span class="task-content">Task</span>
+        <input class="task-checkbox" type="checkbox" name="task-checkbox">
+        <p class="task-content">Task</p>
         <button class="delete-btn" aria-label="Delete Task"></button>
       </li>
     </template>

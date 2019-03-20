@@ -1,6 +1,7 @@
 'use strict';
 
-const ENTER_KEY_CODE = 13;
+const ACTIVE_TASKS_STORAGE = 'tasks';
+const DONE_TASKS_STORAGE = 'doneTasks';
 const form = document.querySelector('.task-form');
 const taskInput = document.querySelector('.task-input');
 const taskInputLabel = document.querySelector('.task-label');
@@ -34,13 +35,13 @@ const onTaskInputBlur = () => {
 };
 
 // ADD NEW TASK
-const addTask = evt => {
+const addTask = (evt) => {
   evt.preventDefault();
   
   if (taskInput.value && taskInput.value.trim().length) {
     hideValidationText();
     renderTask(taskInput.value);
-    addTaskToLocalStorage(taskInput.value);
+    addTaskToLocalStorage(taskInput.value, ACTIVE_TASKS_STORAGE);
     clearTaskInput();
     filterTasks();
   } else {
@@ -59,40 +60,51 @@ const hideValidationText = () => {
 };
 
 // RENDER TASK ITEM
-const renderTask = taskValue => {
+const renderTask = (taskValue, isDone = false) => {
   const taskTemplate = document.querySelector('#task-item').content.querySelector('.task-item').cloneNode(true);
+  const taskCheckbox = taskTemplate.querySelector('.task-checkbox');
   const taskContent = taskTemplate.querySelector('.task-content');
-  
+  const delBtn = taskTemplate.querySelector('.delete-btn');
+
   taskContent.textContent = taskValue;
+  taskCheckbox.addEventListener('input', taskCheckboxHandler);
+  delBtn.addEventListener('click', onDeleteTaskBtnClick);
+
+  if (isDone) {
+    taskCheckbox.checked = true;
+    taskContent.classList.add('done-task');
+  }
+
   taskList.appendChild(taskTemplate);
 };
 
-// DELETE TASK OR MARK AS DONE
-const taskListHandler = evt => {
+// CHECK/UNCHECK TASK AS DONE
+const taskCheckboxHandler = (evt) => {
+  const taskContent = evt.target.parentElement.querySelector('.task-content');
+
+  if (evt.target.checked === true) {
+    taskContent.classList.add('done-task');
+    addTaskToLocalStorage(taskContent.textContent, DONE_TASKS_STORAGE);
+    removeTaskFromLocalStorage(taskContent.textContent, ACTIVE_TASKS_STORAGE);
+  } else {
+    taskContent.classList.remove('done-task');
+    addTaskToLocalStorage(taskContent.textContent, ACTIVE_TASKS_STORAGE);
+    removeTaskFromLocalStorage(taskContent.textContent, DONE_TASKS_STORAGE);
+  }
+};
+
+//  DELETE TASK
+const onDeleteTaskBtnClick = (evt) => {
   evt.preventDefault();
 
-  if (evt.target.classList.contains('task-item')) {
-    evt.target.firstElementChild.classList.toggle('done-task');
-  } else if (evt.target.classList.contains('task-content')) {
-    evt.target.classList.toggle('done-task');
-  }
-
-  if (evt.target.classList.contains('delete-btn')) {
-    evt.target.parentElement.remove();
-    removeTaskFromLocalStorage(evt.target.parentElement.firstElementChild);
-  }
-};
-
-const taskListKeyboardHandler = evt => {
-  if (evt.target.classList.contains('task-item') && evt.keyCode === ENTER_KEY_CODE) {
-    evt.target.firstElementChild.classList.toggle('done-task');
-  }
-};
+  evt.target.parentElement.remove();
+  removeTaskFromLocalStorage(evt.target.parentElement.querySelector('.task-content')); // STORAGE !!!!!!!!!!!!!!!!!!!!!!!
+}
 
 // FILTER TASKS
 const filterTasks = () => {
-  document.querySelectorAll('.task-item').forEach(task => {
-    const item = task.firstElementChild.textContent;
+  document.querySelectorAll('.task-item').forEach((task) => {
+    const item = task.querySelector('.task-content').textContent;
     
     if (item.toLowerCase().indexOf(filterInput.value.toLowerCase()) !== -1) {
       task.style.display = 'flex';
@@ -103,13 +115,13 @@ const filterTasks = () => {
 };
 
 // CLEAR ALL TASKS
-const clearTasks = () => {
+const onClearTasksBtnClick = () => {
   while(taskList.firstChild) {
     taskList.removeChild(taskList.firstChild);
   }
 
   clearFilterInput();
-  clearLocalStorage();
+  clearLocalStorage();  //  STORAGENAME
 };
 
 // CLEAR FILTER INPUT AND UNFILTER TASKS
@@ -119,50 +131,55 @@ const onClearFilterBtnClick = () => {
 };
 
 // CHECK LOCAL STORAGE FOR DATA
-const checkLocalStorage = () => {
+const checkLocalStorage = (storageName) => {
   let tasks;
   
-  if (localStorage.getItem('tasks') === null) {
+  if (localStorage.getItem(storageName) === null) {
     tasks = [];
   } else {
-    tasks = JSON.parse(localStorage.getItem('tasks'));
+    tasks = JSON.parse(localStorage.getItem(storageName));
   }
 
   return tasks;
 };
 
 // STORE TASK IN LOCAL STORAGE
-const addTaskToLocalStorage = task => {
-  let tasks = checkLocalStorage();
+const addTaskToLocalStorage = (task, storageName) => {
+  let tasks = checkLocalStorage(storageName);
 
   tasks.push(task);
-  localStorage.setItem('tasks', JSON.stringify(tasks));
+  localStorage.setItem(storageName, JSON.stringify(tasks));
 };
 
 // REMOVE TASK FROM LOCAL STORAGE
-const removeTaskFromLocalStorage = task => {
-  let tasks = checkLocalStorage();
+const removeTaskFromLocalStorage = (task, storageName) => {
+  let tasks = checkLocalStorage(storageName);
 
   for (let i = 0; i < tasks.length; i++) {
-    if (task.textContent === tasks[i]) {
+    if (task === tasks[i]) {
       tasks.splice(i, 1);
-      localStorage.setItem('tasks', JSON.stringify(tasks));
-      return true;
+      localStorage.setItem(storageName, JSON.stringify(tasks));
+      return;
     }
   }
 };
 
 // CLEAR LOCAL STORAGE
-const clearLocalStorage = () => {
-  localStorage.clear();
+const clearLocalStorage = (storageName = null) => {
+  (storageName === null) ? localStorage.clear() : localStorage.removeItem(storageName);
 };
 
 // RENDER TASKS FROM LOCAL STORAGE ON PAGE LOAD
 const getTasksFromLocalStorage = () => {
-  let tasks = checkLocalStorage();
+  let activeTasks = checkLocalStorage(ACTIVE_TASKS_STORAGE);
+  let doneTasks = checkLocalStorage(DONE_TASKS_STORAGE);
 
-  tasks.forEach(task => {
+  activeTasks.forEach((task) => {
     renderTask(task);
+  });
+
+  doneTasks.forEach((task) => {
+    renderTask(task, true);
   });
 };
 
@@ -176,6 +193,4 @@ form.addEventListener('submit', addTask);
 taskInput.addEventListener('focus', onTaskInputFocus);
 filterInput.addEventListener('input', filterTasks);
 clearFilterBtn.addEventListener('click', onClearFilterBtnClick);
-taskList.addEventListener('click', taskListHandler);
-taskList.addEventListener('keypress', taskListKeyboardHandler);
-clearTasksBtn.addEventListener('click', clearTasks);
+clearTasksBtn.addEventListener('click', onClearTasksBtnClick);
