@@ -26,7 +26,7 @@ body {
   font-size: 18px;
   font-weight: 400;
   line-height: 25px;
-  background-color: rgb(173, 231, 192);
+  background-color: #ade7c0;
 }
 
 .btn {
@@ -132,6 +132,21 @@ body {
   opacity: 0.8;
 }
 
+.task-validation {
+  position: absolute;
+  top: 70px;
+  left: 5px;
+  display: none;
+  width: 100%;
+  font-size: 12px;
+  font-style: italic;
+  color: rgb(89, 139, 106);
+}
+
+.active-tasks {
+  margin-top: 40px;
+}
+
 .filter-wrapper {
   position: relative;
   display: -webkit-box;
@@ -142,7 +157,6 @@ body {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  margin-top: 40px;
 }
 
 .filter-tasks {
@@ -201,11 +215,6 @@ body {
 }
 
 .task-list {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
   margin: 0;
   padding: 0;
   list-style-type: none;
@@ -223,7 +232,7 @@ body {
   width: 100%;
   padding: 10px;
   background-color: rgb(198, 253, 215);
-  border: 1px solid gray;
+  border: 1px solid #808080;
   border-top: none;
   -webkit-transition: all 0.1s linear;
   transition: all 0.1s linear;
@@ -245,6 +254,11 @@ body {
   padding-left: 15px;
   color: #5e5454;
   cursor: default;
+}
+
+.js-done-task {
+  text-decoration: line-through;
+  color: grey;
 }
 
 .delete-btn {
@@ -320,25 +334,65 @@ body {
   opacity: 0.7;
 }
 
-.task-validation {
+.done-tasks {
+  margin-top: 60px;
+}
+
+.done-header-wrapper {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+  padding: 10px;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.5);
+}
+
+.done-header {
+  margin: 0;
+  color: #3B6347;
+}
+
+.toggle-done-btn {
   position: absolute;
-  top: 70px;
-  left: 5px;
-  display: none;
-  width: 100%;
+  top: 12px;
+  right: 0;
+  min-width: 60px;
+  padding: 5px 10px;
+  font-family: inherit;
   font-size: 12px;
-  font-style: italic;
-  color: rgb(89, 139, 106);
+  line-height: 16px;
+  text-transform: lowercase;
+  color: #3B6347;
+  background-color: transparent;
+  background-color: #98dbb0;
+  border: none;
+  -webkit-transition: all 0.2s linear;
+  transition: all 0.2s linear;
+  cursor: pointer;
 }
 
-.done-task {
-  text-decoration: line-through;
-  color: grey;
+.toggle-done-btn:hover,
+.toggle-done-btn:focus {
+  background-color: #82c99b;
 }
 
+.toggle-done-btn:active {
+  opacity: 0.8;
+}
 
+.done-task-list {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  opacity: 0.5;
+}
 
-/* .visually-hidden {
+.visually-hidden {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -346,7 +400,8 @@ body {
   border: 0;
   padding: 0;
   white-space: nowrap;
-  clip-path: inset(100%);
+  -webkit-clip-path: inset(100%);
+          clip-path: inset(100%);
   clip: rect(0 0 0 0);
   overflow: hidden;
-} */
+}

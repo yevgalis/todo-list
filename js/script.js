@@ -1,8 +1,9 @@
 'use strict';
 
-const ACTIVE_TASKS_STORAGE = 'tasks';
+const ACTIVE_TASKS_STORAGE = 'activeTasks';
 const DONE_TASKS_STORAGE = 'doneTasks';
-const form = document.querySelector('.task-form');
+const DONE_TASK_CLASS = 'js-done-task';
+const addTaskForm = document.querySelector('.task-form');
 const taskInput = document.querySelector('.task-input');
 const taskInputLabel = document.querySelector('.task-label');
 const taskValidationMessage = document.querySelector('.task-validation');
@@ -10,6 +11,9 @@ const filterInput = document.querySelector('.filter-tasks');
 const clearFilterBtn = document.querySelector('.clear-filter-btn');
 const taskList = document.querySelector('.task-list');
 const clearTasksBtn = document.querySelector('.clear-tasks-btn');
+const doneTaskList = document.querySelector('.done-task-list');
+const doneTaskBtn = document.querySelector('.toggle-done-btn');
+const doneTaskCount = document.querySelector('.js-done-tasks');
 
 // CLEAR INPUTS
 const clearTaskInput = () => {
@@ -61,7 +65,7 @@ const hideValidationText = () => {
 
 // RENDER TASK ITEM
 const renderTask = (taskValue, isDone = false) => {
-  const taskTemplate = document.querySelector('#task-item').content.querySelector('.task-item').cloneNode(true);
+  const taskTemplate = document.querySelector('#task-item').content.cloneNode(true);
   const taskCheckbox = taskTemplate.querySelector('.task-checkbox');
   const taskContent = taskTemplate.querySelector('.task-content');
   const delBtn = taskTemplate.querySelector('.delete-btn');
@@ -72,10 +76,11 @@ const renderTask = (taskValue, isDone = false) => {
 
   if (isDone) {
     taskCheckbox.checked = true;
-    taskContent.classList.add('done-task');
+    taskContent.classList.add(DONE_TASK_CLASS);
+    doneTaskList.appendChild(taskTemplate)
+  } else {
+    taskList.appendChild(taskTemplate);
   }
-
-  taskList.appendChild(taskTemplate);
 };
 
 // CHECK/UNCHECK TASK AS DONE
@@ -83,27 +88,39 @@ const taskCheckboxHandler = (evt) => {
   const taskContent = evt.target.parentElement.querySelector('.task-content');
 
   if (evt.target.checked === true) {
-    taskContent.classList.add('done-task');
+    taskContent.classList.add(DONE_TASK_CLASS);
+    doneTaskList.appendChild(evt.target.parentElement);
     addTaskToLocalStorage(taskContent.textContent, DONE_TASKS_STORAGE);
     removeTaskFromLocalStorage(taskContent.textContent, ACTIVE_TASKS_STORAGE);
   } else {
-    taskContent.classList.remove('done-task');
+    taskContent.classList.remove(DONE_TASK_CLASS);
+    taskList.appendChild(evt.target.parentElement);
     addTaskToLocalStorage(taskContent.textContent, ACTIVE_TASKS_STORAGE);
     removeTaskFromLocalStorage(taskContent.textContent, DONE_TASKS_STORAGE);
   }
+
+  setDoneTasksCount();
 };
 
 //  DELETE TASK
 const onDeleteTaskBtnClick = (evt) => {
   evt.preventDefault();
 
+  const taskContent = evt.target.parentElement.querySelector('.task-content');
   evt.target.parentElement.remove();
-  removeTaskFromLocalStorage(evt.target.parentElement.querySelector('.task-content')); // STORAGE !!!!!!!!!!!!!!!!!!!!!!!
+
+  if (taskContent.classList.contains(DONE_TASK_CLASS)) {
+    removeTaskFromLocalStorage(taskContent.textContent, DONE_TASKS_STORAGE);
+    setDoneTasksCount();
+  } else {
+    removeTaskFromLocalStorage(taskContent.textContent, ACTIVE_TASKS_STORAGE);
+  }
+  
 }
 
 // FILTER TASKS
 const filterTasks = () => {
-  document.querySelectorAll('.task-item').forEach((task) => {
+  document.querySelectorAll('.task-list .task-item').forEach((task) => {
     const item = task.querySelector('.task-content').textContent;
     
     if (item.toLowerCase().indexOf(filterInput.value.toLowerCase()) !== -1) {
@@ -121,7 +138,7 @@ const onClearTasksBtnClick = () => {
   }
 
   clearFilterInput();
-  clearLocalStorage();  //  STORAGENAME
+  clearLocalStorage(ACTIVE_TASKS_STORAGE);
 };
 
 // CLEAR FILTER INPUT AND UNFILTER TASKS
@@ -129,6 +146,24 @@ const onClearFilterBtnClick = () => {
   clearFilterInput();
   filterTasks();
 };
+
+//  GET NUMBER OF DONE TASKS
+const setDoneTasksCount = () => {
+  doneTaskCount.textContent = doneTaskList.querySelectorAll('.task-item').length;
+}
+
+//  HIDE OR SHOW ARCHIVE TASKS
+const onDoneBtnClick = (evt) => {
+  evt.preventDefault();
+
+  if (evt.target.textContent === 'hide') {
+    doneTaskList.style.display = 'none';
+    evt.target.textContent = 'show';
+  } else if (evt.target.textContent === 'show') {
+    doneTaskList.style.display = 'block';
+    evt.target.textContent = 'hide';
+  }
+}
 
 // CHECK LOCAL STORAGE FOR DATA
 const checkLocalStorage = (storageName) => {
@@ -171,8 +206,8 @@ const clearLocalStorage = (storageName = null) => {
 
 // RENDER TASKS FROM LOCAL STORAGE ON PAGE LOAD
 const getTasksFromLocalStorage = () => {
-  let activeTasks = checkLocalStorage(ACTIVE_TASKS_STORAGE);
-  let doneTasks = checkLocalStorage(DONE_TASKS_STORAGE);
+  const activeTasks = checkLocalStorage(ACTIVE_TASKS_STORAGE);
+  const doneTasks = checkLocalStorage(DONE_TASKS_STORAGE);
 
   activeTasks.forEach((task) => {
     renderTask(task);
@@ -181,6 +216,8 @@ const getTasksFromLocalStorage = () => {
   doneTasks.forEach((task) => {
     renderTask(task, true);
   });
+
+  setDoneTasksCount();
 };
 
 // DEFAULT VALUES
@@ -189,8 +226,9 @@ clearFilterInput();
 
 // ADD LISTENERS
 document.addEventListener('DOMContentLoaded', getTasksFromLocalStorage);
-form.addEventListener('submit', addTask);
+addTaskForm.addEventListener('submit', addTask);
 taskInput.addEventListener('focus', onTaskInputFocus);
 filterInput.addEventListener('input', filterTasks);
 clearFilterBtn.addEventListener('click', onClearFilterBtnClick);
 clearTasksBtn.addEventListener('click', onClearTasksBtnClick);
+doneTaskBtn.addEventListener('click', onDoneBtnClick);
