@@ -224,8 +224,6 @@ body {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -244,7 +242,11 @@ body {
 }
 
 .task-checkbox {
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
   margin-left: 10px;
+  -webkit-transform: scale(1.2);
+          transform: scale(1.2);
   cursor: pointer;
 }
 
@@ -253,6 +255,7 @@ body {
   padding: 0;
   padding-left: 15px;
   color: #5e5454;
+  overflow: auto;   /* FOR BREAKING WORDS LONGER THAN CONTAINER */
   cursor: default;
 }
 
@@ -262,6 +265,8 @@ body {
 }
 
 .delete-btn {
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
   position: relative;
   height: 20px;
   width: 20px;
@@ -334,11 +339,11 @@ body {
   opacity: 0.7;
 }
 
-.done-tasks {
+.archive {
   margin-top: 60px;
 }
 
-.done-header-wrapper {
+.archive-header-wrapper {
   position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -352,12 +357,12 @@ body {
   border-bottom: 1px solid rgba(128, 128, 128, 0.5);
 }
 
-.done-header {
+.archive-header {
   margin: 0;
   color: #3B6347;
 }
 
-.toggle-done-btn {
+.toggle-archive-btn {
   position: absolute;
   top: 12px;
   right: 0;
@@ -376,16 +381,16 @@ body {
   cursor: pointer;
 }
 
-.toggle-done-btn:hover,
-.toggle-done-btn:focus {
+.toggle-archive-btn:hover,
+.toggle-archive-btn:focus {
   background-color: #82c99b;
 }
 
-.toggle-done-btn:active {
+.toggle-archive-btn:active {
   opacity: 0.8;
 }
 
-.done-task-list {
+.archive-list {
   margin: 0;
   padding: 0;
   list-style-type: none;

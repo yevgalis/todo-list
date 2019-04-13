@@ -11,9 +11,9 @@ const filterInput = document.querySelector('.filter-tasks');
 const clearFilterBtn = document.querySelector('.clear-filter-btn');
 const taskList = document.querySelector('.task-list');
 const clearTasksBtn = document.querySelector('.clear-tasks-btn');
-const doneTaskList = document.querySelector('.done-task-list');
-const doneTaskBtn = document.querySelector('.toggle-done-btn');
-const doneTaskCount = document.querySelector('.js-done-tasks');
+const doneTaskList = document.querySelector('.archive-list');
+const doneTaskBtn = document.querySelector('.toggle-archive-btn');
+const doneTaskCount = document.querySelector('.js-archive-counter');
 
 // CLEAR INPUTS
 const clearTaskInput = () => {
