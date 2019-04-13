@@ -27,6 +27,7 @@ const clearFilterInput = () => {
 // INPUT LABEL HANDLING
 const onTaskInputFocus = () => {
   taskInputLabel.classList.add('task-input-focus');
+  taskInput.placeholder = 'feed the raccoon';
   taskInput.addEventListener('blur', onTaskInputBlur);
 };
 
@@ -35,6 +36,7 @@ const onTaskInputBlur = () => {
     taskInputLabel.classList.remove('task-input-focus');
   }
 
+  taskInput.placeholder = '';
   taskInput.removeEventListener('blur', onTaskInputBlur);
 };
 
@@ -223,6 +225,7 @@ const getTasksFromLocalStorage = () => {
 // DEFAULT VALUES
 clearTaskInput();
 clearFilterInput();
+taskInput.placeholder = '';
 
 // ADD LISTENERS
 document.addEventListener('DOMContentLoaded', getTasksFromLocalStorage);

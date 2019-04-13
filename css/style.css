@@ -254,8 +254,9 @@ body {
   margin: 0;
   padding: 0;
   padding-left: 15px;
+  padding-right: 10px;
   color: #5e5454;
-  overflow: auto;   /* FOR BREAKING WORDS LONGER THAN CONTAINER */
+  overflow: auto;   /* FOR BREAKING WORDS LONGER THAN CONTAINER WIDTH */
   cursor: default;
 }
 
