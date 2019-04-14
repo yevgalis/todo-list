@@ -27,7 +27,7 @@ const clearFilterInput = () => {
 // INPUT LABEL HANDLING
 const onTaskInputFocus = () => {
   taskInputLabel.classList.add('task-input-focus');
-  taskInput.placeholder = 'feed the raccoon';
+  setTimeout(() => { taskInput.placeholder = 'feed the raccoon'; }, 100);
   taskInput.addEventListener('blur', onTaskInputBlur);
 };
 
@@ -36,7 +36,7 @@ const onTaskInputBlur = () => {
     taskInputLabel.classList.remove('task-input-focus');
   }
 
-  taskInput.placeholder = '';
+  setTimeout(() => { taskInput.placeholder = ''; }, 100);
   taskInput.removeEventListener('blur', onTaskInputBlur);
 };
 
