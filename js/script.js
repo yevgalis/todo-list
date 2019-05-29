@@ -44,7 +44,7 @@ const onTaskInputBlur = () => {
 const addTask = (evt) => {
   evt.preventDefault();
   
-  if (taskInput.value && taskInput.value.trim().length) {
+  if (taskInput.value.trim().length) {
     hideValidationText();
     renderTask(taskInput.value);
     addTaskToLocalStorage(taskInput.value, ACTIVE_TASKS_STORAGE);
@@ -58,7 +58,7 @@ const addTask = (evt) => {
 // TEXT INPUT VALIDATION TIPS
 const showValidationText = () => {
   taskValidationMessage.style.display = 'block';
-  taskValidationMessage.textContent = `* text can't be empty or consist of spaces`;
+  taskValidationMessage.textContent = `* text can't consist of spaces`;
 };
 
 const hideValidationText = () => {
