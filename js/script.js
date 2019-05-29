@@ -101,7 +101,7 @@ const taskCheckboxHandler = (evt) => {
     removeTaskFromLocalStorage(taskContent.textContent, DONE_TASKS_STORAGE);
   }
 
-  setDoneTasksCount();
+  setDoneTasksCounter();
 };
 
 //  DELETE TASK
@@ -113,7 +113,7 @@ const onDeleteTaskBtnClick = (evt) => {
 
   if (taskContent.classList.contains(DONE_TASK_CLASS)) {
     removeTaskFromLocalStorage(taskContent.textContent, DONE_TASKS_STORAGE);
-    setDoneTasksCount();
+    setDoneTasksCounter();
   } else {
     removeTaskFromLocalStorage(taskContent.textContent, ACTIVE_TASKS_STORAGE);
   }
@@ -150,7 +150,7 @@ const onClearFilterBtnClick = () => {
 };
 
 //  GET NUMBER OF DONE TASKS
-const setDoneTasksCount = () => {
+const setDoneTasksCounter = () => {
   doneTaskCount.textContent = doneTaskList.querySelectorAll('.task-item').length;
 }
 
@@ -219,7 +219,7 @@ const getTasksFromLocalStorage = () => {
     renderTask(task, true);
   });
 
-  setDoneTasksCount();
+  setDoneTasksCounter();
 };
 
 // DEFAULT VALUES
