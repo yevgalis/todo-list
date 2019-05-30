@@ -93,6 +93,11 @@ body {
   border-bottom: 1px solid rgba(0, 0, 0, 0.3);
 }
 
+.task-input:required {
+  -webkit-box-shadow:none;
+          box-shadow:none;
+}
+
 .task-label {
   position: absolute;
   top: 35px;
@@ -363,10 +368,14 @@ body {
   color: #3B6347;
 }
 
-.toggle-archive-btn {
+.archive-buttons-wrapper {
   position: absolute;
   top: 12px;
   right: 0;
+}
+
+.toggle-archive-btn,
+.clear-archive-btn {
   min-width: 60px;
   padding: 5px 10px;
   font-family: inherit;
@@ -382,12 +391,19 @@ body {
   cursor: pointer;
 }
 
+.clear-archive-btn {
+  display: none;
+}
+
 .toggle-archive-btn:hover,
-.toggle-archive-btn:focus {
+.toggle-archive-btn:focus,
+.clear-archive-btn:hover,
+.clear-archive-btn:focus {
   background-color: #82c99b;
 }
 
-.toggle-archive-btn:active {
+.toggle-archive-btn:active,
+.clear-archive-btn:active {
   opacity: 0.8;
 }
 

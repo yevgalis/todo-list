@@ -13,6 +13,7 @@ const taskList = document.querySelector('.task-list');
 const clearTasksBtn = document.querySelector('.clear-tasks-btn');
 const doneTaskList = document.querySelector('.archive-list');
 const doneTaskBtn = document.querySelector('.toggle-archive-btn');
+const clearDoneTasksBtn = document.querySelector('.clear-archive-btn');
 const doneTaskCount = document.querySelector('.js-archive-counter');
 
 // CLEAR INPUTS
@@ -27,7 +28,7 @@ const clearFilterInput = () => {
 // INPUT LABEL HANDLING
 const onTaskInputFocus = () => {
   taskInputLabel.classList.add('task-input-focus');
-  setTimeout(() => { taskInput.placeholder = 'feed the raccoon'; }, 100);
+  setTimeout(() => { taskInput.placeholder = 'feed the raccoon'; }, 200);
   taskInput.addEventListener('blur', onTaskInputBlur);
 };
 
@@ -59,6 +60,7 @@ const addTask = (evt) => {
 const showValidationText = () => {
   taskValidationMessage.style.display = 'block';
   taskValidationMessage.textContent = `* text can't consist of spaces`;
+  setTimeout(() => { hideValidationText(); }, 3000);
 };
 
 const hideValidationText = () => {
@@ -151,8 +153,21 @@ const onClearFilterBtnClick = () => {
 
 //  GET NUMBER OF DONE TASKS
 const setDoneTasksCounter = () => {
-  doneTaskCount.textContent = doneTaskList.querySelectorAll('.task-item').length;
+  const archiveTasksCount = doneTaskList.querySelectorAll('.task-item').length;
+  
+  doneTaskCount.textContent = archiveTasksCount;
+  (archiveTasksCount > 1) ? clearDoneTasksBtn.style.display = 'inline-block' : clearDoneTasksBtn.style.display = 'none';
 }
+
+// CLEAR ARCHIVE
+const onClearDoneTasksBtnClick = () => {
+  while(doneTaskList.firstChild) {
+    doneTaskList.removeChild(doneTaskList.firstChild);
+  }
+
+  setDoneTasksCounter();
+  clearLocalStorage(DONE_TASKS_STORAGE);
+};
 
 //  HIDE OR SHOW ARCHIVE TASKS
 const onDoneBtnClick = (evt) => {
@@ -234,4 +249,5 @@ taskInput.addEventListener('focus', onTaskInputFocus);
 filterInput.addEventListener('input', filterTasks);
 clearFilterBtn.addEventListener('click', onClearFilterBtnClick);
 clearTasksBtn.addEventListener('click', onClearTasksBtnClick);
+clearDoneTasksBtn.addEventListener('click', onClearDoneTasksBtnClick);
 doneTaskBtn.addEventListener('click', onDoneBtnClick);
