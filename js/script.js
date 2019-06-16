@@ -44,7 +44,7 @@ const onTaskInputBlur = () => {
 // ADD NEW TASK
 const addTask = (evt) => {
   evt.preventDefault();
-  
+
   if (taskInput.value.trim().length) {
     hideValidationText();
     renderTask(taskInput.value);
@@ -119,14 +119,13 @@ const onDeleteTaskBtnClick = (evt) => {
   } else {
     removeTaskFromLocalStorage(taskContent.textContent, ACTIVE_TASKS_STORAGE);
   }
-  
 }
 
 // FILTER TASKS
 const filterTasks = () => {
   document.querySelectorAll('.task-list .task-item').forEach((task) => {
     const item = task.querySelector('.task-content').textContent;
-    
+
     if (item.toLowerCase().indexOf(filterInput.value.toLowerCase()) !== -1) {
       task.style.display = 'flex';
     } else {
@@ -154,7 +153,7 @@ const onClearFilterBtnClick = () => {
 //  GET NUMBER OF DONE TASKS
 const setDoneTasksCounter = () => {
   const archiveTasksCount = doneTaskList.querySelectorAll('.task-item').length;
-  
+
   doneTaskCount.textContent = archiveTasksCount;
   (archiveTasksCount > 1) ? clearDoneTasksBtn.style.display = 'inline-block' : clearDoneTasksBtn.style.display = 'none';
 }
@@ -185,7 +184,7 @@ const onDoneBtnClick = (evt) => {
 // CHECK LOCAL STORAGE FOR DATA
 const checkLocalStorage = (storageName) => {
   let tasks;
-  
+
   if (localStorage.getItem(storageName) === null) {
     tasks = [];
   } else {
